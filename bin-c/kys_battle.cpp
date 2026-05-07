@@ -1831,16 +1831,17 @@ void CalPoiHurtLife()
 {
     for (int i = 0; i < BRoleAmount; i++)
     {
-        if (Brole[i].Dead == 0 && Rrole[Brole[i].rnum].Poison > 0)
+        Brole[i].ShowNumber = -1;
+        if (Rrole[Brole[i].rnum].Poison > 0 && Brole[i].Dead == 0 && Brole[i].Acted == 1)
         {
-            int hurt = Rrole[Brole[i].rnum].Poison * 3;
-            Rrole[Brole[i].rnum].CurrentHP -= hurt;
+            if (POISON_HURT != 0)
+            {
+                Rrole[Brole[i].rnum].CurrentHP -= Rrole[Brole[i].rnum].Poison / POISON_HURT + 1;
+            }
             if (Rrole[Brole[i].rnum].CurrentHP <= 0)
             {
-                Rrole[Brole[i].rnum].CurrentHP = 0;
-                Brole[i].Dead = 1;
+                Rrole[Brole[i].rnum].CurrentHP = 1;
             }
-            Brole[i].ShowNumber = hurt;
         }
     }
 }
